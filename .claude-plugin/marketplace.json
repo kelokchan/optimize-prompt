@@ -1,0 +1,6 @@
+{
+  "name": "optimize-prompt",
+  "owner": { "name": "Kelok Chan" },
+  "description": "Optimize prompt button for Claude Code: Haiku rewrites your draft in place",
+  "plugins": [{ "name": "optimize-prompt", "source": "./" }]
+}

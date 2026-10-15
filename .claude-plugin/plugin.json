@@ -1,0 +1,9 @@
+{
+  "name": "optimize-prompt",
+  "version": "0.1.0",
+  "description": "Optimize prompt button above the prompt box: Haiku rewrites your draft in place",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "Kelok Chan"
+  }
+}
