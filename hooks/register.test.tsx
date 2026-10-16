@@ -76,6 +76,14 @@ test('rewrites the draft with haiku, on every surface', async ($, on) => {
   ])
 })
 
+test('uses the model set in userConfig', { options: { model: 'sonnet' } }, async ($, on) => {
+  const seen = world(on, ['fix the bug'])
+  const ui = await $.ui.mount({ plugin: 'optimize-prompt', surface: 'terminal', ...BAND })
+  await ui.press({ key: 'optimize' })
+  await ui.unmount()
+  expect(seen.models).toEqual(['sonnet'])
+})
+
 test('empty draft never calls the model', async ($, on) => {
   const seen = world(on, ['   '])
   const ui = await $.ui.mount({ plugin: 'optimize-prompt', surface: 'terminal', ...BAND })

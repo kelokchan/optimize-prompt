@@ -10,9 +10,6 @@ const SPINNER = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', 
 const SPINNER_MS = 100
 const spinnerGlyph = (n: number) => SPINNER[n % SPINNER.length] ?? ''
 
-// Haiku: cheapest + fastest model; rewriting a prompt needs no deep reasoning.
-const MODEL = 'haiku'
-
 const SYSTEM = `You rewrite a draft prompt the user is about to send to an AI coding assistant, in the middle of an ongoing session.
 <conversation> holds the latest messages of that session and the assistant's tool calls between them (lines starting "tool", showing files read or edited, commands run and their results). Use it only to understand what the draft refers to: resolve vague references ("it", "the button", "that error") to the concrete thing, file or feature being discussed. Name a file or command from it only where the draft refers to one.
 Rules:
@@ -52,7 +49,10 @@ const recentContext = async ($: EngineInterface) => {
   return tail(rendered, CONTEXT_TOTAL)
 }
 
-export const register: Register = on => {
+export const register: Register = (on, options) => {
+  // userConfig `model` in plugin.json; the engine fills its default (haiku).
+  const model = String(options.model)
+
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
     if (e.props.hasSurvey) {
       return next(e)
@@ -75,7 +75,7 @@ export const register: Register = on => {
       try {
         const context = await recentContext($)
         const r = await $.model.complete({
-          model: MODEL,
+          model,
           system: SYSTEM,
           prompt: `${context && `<conversation>\n${context}\n</conversation>\n\n`}<draft>\n${draft}\n</draft>`,
           effort: 'low',

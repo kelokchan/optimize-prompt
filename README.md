@@ -1,6 +1,10 @@
 # optimize-prompt
 
-A Claude Code mod: an Optimize prompt button above the prompt box. Haiku rewrites your draft in place.
+A Claude Code mod: an Optimize prompt button above the prompt box. A model (Haiku by default) rewrites your draft in place.
+
+## Settings
+
+`model`: `haiku` (default), `sonnet` or `opus`. Set it at install, or later in `/config`.
 
 ## Install
 
